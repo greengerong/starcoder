@@ -9,7 +9,8 @@ preprocessing_num_workers: 12
 
 # Training arguments with sensible defaults
 # Add other options from here: https://huggingface.co/docs/transformers/v4.26.1/en/main_classes/trainer#transformers.TrainingArguments
-bf16: true # Gives ~2x speed up in training time, but disable if you start seeing NaNs
+bf16: false # Gives ~2x speed up in training time, but disable if you start seeing NaNs
+fp16: true
 do_eval: true
 do_train: true
 evaluation_strategy: epoch # One of ["no", "steps", "epoch"]
