@@ -38,6 +38,6 @@ save_steps: 500
 save_strategy: steps
 save_total_limit: null
 seed: 42
-tf32: true
+tf32: false
 warmup_ratio: 0.03
 weight_decay: 0.
