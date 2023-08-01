@@ -109,13 +109,15 @@ def main():
     ###############
     raw_datasets = load_dataset(data_args.dataset_name)
 
-    # "train"
+    # "train", "test"
     train_key = "train_ift" 
-      
+    train_test_key = "test_ift"  
+  
     logger.info(
         f"Training on the following datasets and their proportions: {[split + ' : ' + str(dset.num_rows) for split, dset in raw_datasets.items()]}"
     )
-    print(raw_datasets, train_key)
+    print(train_key,train_test_key)
+    print(raw_datasets)
   
     with training_args.main_process_first(desc="Log a few random samples from the raw training set"):
         for index in random.sample(range(len(raw_datasets[train_key])), 3):
@@ -144,7 +146,7 @@ def main():
     if training_args.do_train:
         column_names = list(raw_datasets[train_key].features)
     else:
-        column_names = list(raw_datasets["test"].features)
+        column_names = list(raw_datasets[train_test_key].features)
     text_column_name = "text" if "text" in column_names else column_names[0]
 
     with training_args.main_process_first(desc="Log a few random samples from the training set"):
@@ -235,9 +237,9 @@ def main():
             train_dataset = train_dataset.select(range(max_train_samples))
 
     if training_args.do_eval:
-        if "test" not in tokenized_datasets:
+        if train_test_key not in tokenized_datasets:
             raise ValueError("--do_eval requires a validation dataset")
-        eval_dataset = lm_datasets["test"]
+        eval_dataset = lm_datasets[train_test_key]
         if data_args.max_eval_samples is not None:
             max_eval_samples = min(len(eval_dataset), data_args.max_eval_samples)
             eval_dataset = eval_dataset.select(range(max_eval_samples))
