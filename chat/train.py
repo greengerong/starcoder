@@ -54,6 +54,9 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
+    print('model_args', model_args)
+    print('data_args', data_args)
+    print('training_args', training_args)
     # Set seed for reproducibility
     set_seed(training_args.seed)
 
@@ -105,11 +108,9 @@ def main():
     # Load datasets
     ###############
     raw_datasets = load_dataset(data_args.dataset_name)
-    
-    if data_args.train_key is not None:
-      train_key = data_args.train_key
-    else:
-      train_key = "train"
+
+    # "train"
+    train_key = "train_ift" 
       
     logger.info(
         f"Training on the following datasets and their proportions: {[split + ' : ' + str(dset.num_rows) for split, dset in raw_datasets.items()]}"
