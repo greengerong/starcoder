@@ -105,7 +105,12 @@ def main():
     # Load datasets
     ###############
     raw_datasets = load_dataset(data_args.dataset_name)
-    train_key = data_args.get("train_key", "train")
+    
+    if data_args.train_key is not None:
+      train_key = data_args.train_key
+    else:
+      train_key = "train"
+      
     logger.info(
         f"Training on the following datasets and their proportions: {[split + ' : ' + str(dset.num_rows) for split, dset in raw_datasets.items()]}"
     )
