@@ -108,6 +108,7 @@ def main():
     logger.info(
         f"Training on the following datasets and their proportions: {[split + ' : ' + str(dset.num_rows) for split, dset in raw_datasets.items()]}"
     )
+    print(raw_datasets)
     with training_args.main_process_first(desc="Log a few random samples from the raw training set"):
         for index in random.sample(range(len(raw_datasets["train"])), 3):
             logger.info(f"Sample {index} of the raw training set:\n\n{raw_datasets['train'][index]['messages']}")
